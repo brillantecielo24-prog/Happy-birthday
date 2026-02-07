@@ -4,6 +4,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Birthday Surprise 🎁</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:cursive}
 
@@ -37,7 +39,7 @@ canvas{
     z-index:2;
 }
 
-/* MAKE NOTE SCREEN SCROLLABLE */
+/* NOTE SCREEN SCROLL */
 #noteScreen {
     overflow-y: auto;
     padding-top: 40px;
@@ -60,19 +62,25 @@ canvas{
 
 .box{
     width:100%;height:100%;
-    background:linear-gradient(145deg,#ff2e79,#ff0055);
+    background:#ff1a66;
     border-radius:20px;
     position:absolute;bottom:0;
 }
 
+/* LID WITH PROPER ROTATION POINT */
 .lid{
-    width:100%;height:70px;
-    background:linear-gradient(145deg,#ff2e79,#ff0055);
+    width:100%;
+    height:70px;
+    background:#ff1a66;
     border-radius:20px 20px 10px 10px;
-    position:absolute;top:-60px;
-    transition:1s;
+    position:absolute;
+    top:-60px;
+
+    transition: transform 1s ease-in-out;
+    transform-origin: center bottom;
 }
 
+/* RIBBONS */
 .ribbon-v{
     width:24px;height:100%;
     background:white;position:absolute;
@@ -85,19 +93,39 @@ canvas{
     top:50%;transform:translateY(-50%);
 }
 
+/* ---- NEW REALISTIC BOW DESIGN ---- */
 .bow{
-    position:absolute;top:-95px;left:50%;
+    position:absolute;
+    top:-35px;
+    left:50%;
     transform:translateX(-50%);
-    width:120px;height:70px;
+    width:100px;
+    height:50px;
 }
 
-.bow:before,.bow:after{
-    content:'';position:absolute;
-    width:60px;height:60px;
-    background:white;border-radius:50%;
+/* LEFT LOOP */
+.bow:before{
+    content:'';
+    position:absolute;
+    width:50px;
+    height:50px;
+    background:white;
+    border-radius:50% 50% 0 50%;
+    transform:rotate(-35deg);
+    left:0;
 }
-.bow:before{left:0}
-.bow:after{right:0}
+
+/* RIGHT LOOP */
+.bow:after{
+    content:'';
+    position:absolute;
+    width:50px;
+    height:50px;
+    background:white;
+    border-radius:50% 50% 50% 0;
+    transform:rotate(35deg);
+    right:0;
+}
 
 /* SLIDER */
 .slider{
@@ -115,16 +143,31 @@ canvas{
     object-fit:cover;flex-shrink:0;
 }
 
-/* NOTE BOX - NOW SCROLLABLE */
+/* NOTE BOX */
 #note{
     background:#ff0066;
     padding:40px;
     border-radius:20px;
     width:80%;
-    font-size:22px;
 
-    max-height:70vh;      /* LIMIT HEIGHT */
-    overflow-y:auto;      /* ENABLE SCROLLING */
+    font-family: 'Poppins', sans-serif;
+    font-size:18px;
+    line-height:1.7;
+    text-align:left;
+    letter-spacing:0.5px;
+
+    max-height:70vh;
+    overflow-y:auto;
+}
+
+/* HIDE SCROLLBAR */
+#note::-webkit-scrollbar {
+    width: 0px;
+}
+
+#note {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 
 /* BUTTON */
@@ -149,11 +192,15 @@ button{
 
     <div class="gift-wrapper">
         <div class="gift-box" onclick="openGift()">
-            <div class="lid" id="lid"></div>
+
+            <!-- LID WITH ATTACHED BOW -->
+            <div class="lid" id="lid">
+                <div class="bow"></div>
+            </div>
+
             <div class="box"></div>
             <div class="ribbon-v"></div>
             <div class="ribbon-h"></div>
-            <div class="bow"></div>
         </div>
     </div>
 
@@ -183,19 +230,15 @@ button{
 
 <!-- NOTE SCREEN -->
 <div id="noteScreen" class="screen" style="display:none">
-    <h2>For You 💖</h2>
+    <h2 style="font-family:'Poppins',sans-serif">For You 💖</h2>
 
     <div id="note">
         Happy Birthday to the most special person in my life 💖<br><br>
 
-        Happy Birthday! As this special day arrives, I wanted to take a moment to pause and reflect on just how much you mean to me.  
-        It’s not every day that someone as wonderful, kind, and inspiring as you celebrates another year of life, and I am truly honored to be a part of your journey.  
-        Watching you navigate through life with such grace, determination, and humor has been a joy.  
-        <br><br>
-
-        You fill my days with happiness, laughter, and warmth.  
-        I hope this birthday brings you all the love and joy you deserve.  
-        No matter where life takes us, you will always have a special place in my heart.  
+        Happy Birthday! As this special day arrives, I wanted to take a moment to pause and reflect on just how much you mean to me. It’s not every day that someone as wonderful, kind, and inspiring as you celebrates another year of life, and I am truly honored to be a part of your journey. Watching you navigate through life with such grace, determination, and humor has been a joy, and I feel blessed to call you my [friend/partner/relative].
+When I think about you, I think about the laughter we’ve shared—those moments where we laughed so hard our stomachs hurt. I think about the quiet, supportive moments when you were there to listen without judgment. You possess a rare, genuine spirit that lights up every room you walk into, making everyone around you feel valued and special. You make the world a better, brighter place, and I hope you know how deeply you are appreciated. 
+This past year has undoubtedly been full of adventures, challenges, and growth. You have handled everything that came your way with remarkable strength, and I am so proud of you. As you turn the page to a new chapter, I want to wish you the absolute best. May this coming year be filled with unprecedented opportunities, immense happiness, and the fulfillment of the dreams you hold closest to your heart. 
+I hope you never stop chasing your passions and that you continue to embrace life with that infectious curiosity of yours. Remember to take time for yourself, to pause and appreciate the beauty around you, and to celebrate your accomplishments, no matter how small they may seem. You deserve all the success and love in the world, and I hope you feel surrounded by it today.   
         <br><br>
 
         Thank you for being you.  
@@ -207,7 +250,8 @@ button{
 
 <script>
 function openGift(){
-    document.getElementById("lid").style.transform="translateY(-120px) rotate(-15deg)";
+    document.getElementById("lid").style.transform="rotate(-25deg)";
+
     setTimeout(()=>{
         giftScreen.style.display="none";
         mainScreen.style.display="flex";
