@@ -14,7 +14,6 @@ body{
     background:linear-gradient(135deg,#0a192f,#0f3057,#1b262c,#16213e);
     background-attachment:fixed;
     color:white;
-    overflow:hidden;
     text-align:center;
 }
 
@@ -36,6 +35,13 @@ canvas{
     align-items:center;
     gap:30px;
     z-index:2;
+}
+
+/* MAKE NOTE SCREEN SCROLLABLE */
+#noteScreen {
+    overflow-y: auto;
+    padding-top: 40px;
+    padding-bottom: 40px;
 }
 
 /* GIFT */
@@ -109,12 +115,16 @@ canvas{
     object-fit:cover;flex-shrink:0;
 }
 
-/* NOTE */
+/* NOTE BOX - NOW SCROLLABLE */
 #note{
     background:#ff0066;
-    padding:40px;border-radius:20px;
+    padding:40px;
+    border-radius:20px;
     width:80%;
     font-size:22px;
+
+    max-height:70vh;      /* LIMIT HEIGHT */
+    overflow-y:auto;      /* ENABLE SCROLLING */
 }
 
 /* BUTTON */
@@ -174,12 +184,22 @@ button{
 <!-- NOTE SCREEN -->
 <div id="noteScreen" class="screen" style="display:none">
     <h2>For You 💖</h2>
+
     <div id="note">
         Happy Birthday to the most special person in my life 💖<br><br>
-       Happy Birthday! As this special day arrives, I wanted to take a moment to pause and reflect on just how much you mean to me. It’s not every day that someone as wonderful, kind, and inspiring as you celebrates another year of life, and I am truly honored to be a part of your journey. Watching you navigate through life with such grace, determination, and humor has been a joy, and I feel blessed to call you my [friend/partner/relative].
-When I think about you, I think about the laughter we’ve shared—those moments where we laughed so hard our stomachs hurt. I think about the quiet, supportive moments when you were there to listen without judgment. You possess a rare, genuine spirit that lights up every room you walk into, making everyone around you feel valued and special. You make the world a better, brighter place, and I hope you know how deeply you are appreciated. 
-This past year has undoubtedly been full of adventures, challenges, and growth. You have handled everything that came your way with remarkable strength, and I am so proud of you. As you turn the page to a new chapter, I want to wish you the absolute best. May this coming year be filled with unprecedented opportunities, immense happiness, and the fulfillment of the dreams you hold closest to your heart. 
-I hope you never stop chasing your passions and that you continue to embrace life with that infectious curiosity of yours. Remember to take time for yourself, to pause and appreciate the beauty around you, and to celebrate your accomplishments, no matter how small they may seem. You deserve all the success and love in the world, and I hope you feel surrounded by it today. 
+
+        Happy Birthday! As this special day arrives, I wanted to take a moment to pause and reflect on just how much you mean to me.  
+        It’s not every day that someone as wonderful, kind, and inspiring as you celebrates another year of life, and I am truly honored to be a part of your journey.  
+        Watching you navigate through life with such grace, determination, and humor has been a joy.  
+        <br><br>
+
+        You fill my days with happiness, laughter, and warmth.  
+        I hope this birthday brings you all the love and joy you deserve.  
+        No matter where life takes us, you will always have a special place in my heart.  
+        <br><br>
+
+        Thank you for being you.  
+        Here’s to many more memories, smiles, and beautiful moments together! 💕
     </div>
 </div>
 
@@ -240,5 +260,4 @@ draw();
 
 </body>
 </html>
-
-
+v
