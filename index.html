@@ -13,10 +13,17 @@ html,body{height:100%}
 
 body{
     min-height:100vh;
-    background:linear-gradient(135deg,#0a192f,#0f3057,#1b262c,#16213e);
-    background-attachment:fixed;
+    background:linear-gradient(-45deg,#0a192f,#0f3057,#1b262c,#16213e,#ff1a66);
+    background-size:400% 400%;
+    animation:gradientBG 10s ease infinite;
     color:white;
     text-align:center;
+}
+
+@keyframes gradientBG{
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
 }
 
 /* CONFETTI */
@@ -25,6 +32,20 @@ canvas{
     top:0;left:0;
     z-index:0;
     pointer-events:none;
+}
+
+/* FLOATING HEARTS */
+.heart{
+    position:fixed;
+    bottom:-20px;
+    font-size:22px;
+    animation: floatUp 6s linear infinite;
+    opacity:0.8;
+}
+
+@keyframes floatUp{
+    0%{transform:translateY(0) scale(0.5); opacity:1}
+    100%{transform:translateY(-110vh) scale(1.2); opacity:0}
 }
 
 /* SCREENS */
@@ -37,6 +58,24 @@ canvas{
     align-items:center;
     gap:30px;
     z-index:2;
+    animation: screenEnter 1s ease;
+}
+
+@keyframes screenEnter{
+    from{opacity:0; transform:scale(0.9)}
+    to{opacity:1; transform:scale(1)}
+}
+
+/* TEXT ANIMATION */
+.animated-text{
+    font-size:32px;
+    animation: textGlow 2s ease infinite;
+}
+
+@keyframes textGlow{
+    0%{text-shadow:0 0 5px #ff1a66}
+    50%{text-shadow:0 0 20px #ff1a66}
+    100%{text-shadow:0 0 5px #ff1a66}
 }
 
 /* NOTE SCREEN SCROLL */
@@ -46,7 +85,8 @@ canvas{
     padding-bottom: 40px;
 }
 
-/* GIFT */
+/* --------- GIFT SECTION (EXACTLY UNCHANGED) --------- */
+
 .gift-wrapper{height:320px;display:flex;align-items:flex-end}
 
 .gift-box{
@@ -67,7 +107,6 @@ canvas{
     position:absolute;bottom:0;
 }
 
-/* LID WITH PROPER ROTATION POINT */
 .lid{
     width:100%;
     height:70px;
@@ -80,7 +119,6 @@ canvas{
     transform-origin: center bottom;
 }
 
-/* RIBBONS */
 .ribbon-v{
     width:24px;height:100%;
     background:white;position:absolute;
@@ -93,7 +131,6 @@ canvas{
     top:50%;transform:translateY(-50%);
 }
 
-/* ---- NEW REALISTIC BOW DESIGN ---- */
 .bow{
     position:absolute;
     top:-35px;
@@ -103,7 +140,6 @@ canvas{
     height:50px;
 }
 
-/* LEFT LOOP */
 .bow:before{
     content:'';
     position:absolute;
@@ -115,7 +151,6 @@ canvas{
     left:0;
 }
 
-/* RIGHT LOOP */
 .bow:after{
     content:'';
     position:absolute;
@@ -127,11 +162,19 @@ canvas{
     right:0;
 }
 
+/* ----------------------------------------------------- */
+
 /* SLIDER */
 .slider{
     width:90%;max-width:360px;
     height:380px;
     overflow:hidden;border-radius:20px;
+    animation: pop 1s ease;
+}
+
+@keyframes pop{
+    from{transform:scale(0.8)}
+    to{transform:scale(1)}
 }
 
 .slides{
@@ -141,6 +184,13 @@ canvas{
 .slides img{
     width:100%;height:380px;
     object-fit:cover;flex-shrink:0;
+    animation: imagePulse 3s infinite;
+}
+
+@keyframes imagePulse{
+    0%{transform:scale(1)}
+    50%{transform:scale(1.03)}
+    100%{transform:scale(1)}
 }
 
 /* NOTE BOX */
@@ -154,27 +204,49 @@ canvas{
     font-size:18px;
     line-height:1.7;
     text-align:left;
-    letter-spacing:0.5px;
 
     max-height:70vh;
     overflow-y:auto;
+
+    animation: fadeSlide 1.5s ease;
 }
 
-/* HIDE SCROLLBAR */
-#note::-webkit-scrollbar {
-    width: 0px;
+@keyframes fadeSlide{
+    from{opacity:0; transform:translateY(40px)}
+    to{opacity:1; transform:translateY(0)}
 }
 
-#note {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-}
+#note::-webkit-scrollbar { width: 0px; }
 
-/* BUTTON */
+/* GLOW BUTTON */
 button{
     padding:12px 25px;
     border:none;border-radius:25px;
     font-size:18px;cursor:pointer;
+
+    background:#ff1a66;
+    color:white;
+
+    animation: btnGlow 2s infinite;
+    transition:0.3s;
+}
+
+@keyframes btnGlow{
+    0%{box-shadow:0 0 5px #ff1a66}
+    50%{box-shadow:0 0 20px #ff1a66}
+    100%{box-shadow:0 0 5px #ff1a66}
+}
+
+button:hover{
+    transform:scale(1.1);
+}
+
+/* MOBILE */
+@media(max-width:600px){
+    #note{
+        font-size:16px;
+        width:92%;
+    }
 }
 </style>
 </head>
@@ -185,15 +257,13 @@ button{
 
 <!-- GIFT SCREEN -->
 <div id="giftScreen" class="screen">
-    <div style="font-size:28px;width:85%">
+    <div class="animated-text">
         Hey There! I got something For you 💖<br>
         Are you ready for the surprise
     </div>
 
     <div class="gift-wrapper">
         <div class="gift-box" onclick="openGift()">
-
-            <!-- LID WITH ATTACHED BOW -->
             <div class="lid" id="lid">
                 <div class="bow"></div>
             </div>
@@ -210,7 +280,7 @@ button{
 <!-- MAIN SCREEN -->
 <div id="mainScreen" class="screen" style="display:none">
     
-    <h1>Happy Birthday ❤️</h1>
+    <h1 class="animated-text">Happy Birthday ❤️</h1>
 
     <div class="slider">
         <div class="slides" id="slides">
@@ -226,33 +296,43 @@ button{
     </div>
 
     <button onclick="showNote()">Surprise Note 💌</button>
+    <button onclick="backToGift()">⬅ Back</button>
 </div>
 
 <!-- NOTE SCREEN -->
 <div id="noteScreen" class="screen" style="display:none">
-    <h2 style="font-family:'Poppins',sans-serif">For You 💖</h2>
+    <h2 class="animated-text">For You 💖</h2>
 
     <div id="note">
         Happy Birthday to the most special person in my life 💖<br><br>
-
-        Happy Birthday! As this special day arrives, I wanted to take a moment to pause and reflect on just how much you mean to me.  
-        It’s not every day that someone as wonderful, kind, and inspiring as you celebrates another year of life.  
-        Watching you navigate through life with such grace, determination, and humor has been a joy.  
+       Happy Birthday! As this special day arrives, I wanted to take a moment to pause and reflect on just how much you mean to me. It’s not every day that someone as wonderful, kind, and inspiring as you celebrates another year of life, and I am truly honored to be a part of your journey. Watching you navigate through life with such grace, determination, and humor has been a joy, and I feel blessed to call you my [friend/partner/relative].
+When I think about you, I think about the laughter we’ve shared—those moments where we laughed so hard our stomachs hurt. I think about the quiet, supportive moments when you were there to listen without judgment. You possess a rare, genuine spirit that lights up every room you walk into, making everyone around you feel valued and special. You make the world a better, brighter place, and I hope you know how deeply you are appreciated. 
+This past year has undoubtedly been full of adventures, challenges, and growth. You have handled everything that came your way with remarkable strength, and I am so proud of you. As you turn the page to a new chapter, I want to wish you the absolute best. May this coming year be filled with unprecedented opportunities, immense happiness, and the fulfillment of the dreams you hold closest to your heart. 
+I hope you never stop chasing your passions and that you continue to embrace life with that infectious curiosity of yours. Remember to take time for yourself, to pause and appreciate the beauty around you, and to celebrate your accomplishments, no matter how small they may seem. You deserve all the success and love in the world, and I hope you feel surrounded by it today.  
         <br><br>
-
-        You fill my days with happiness, laughter, and warmth.  
-        I hope this birthday brings you all the love and joy you deserve.  
-        No matter where life takes us, you will always have a special place in my heart.  
-        <br><br>
-
-        Thank you for being you.  
-        Here’s to many more memories, smiles, and beautiful moments together! 💕
+        HAPPY BIRTHDAY 💕
     </div>
+
+    <button onclick="backToMain()">⬅ Back to Gallery</button>
 </div>
 
 <audio id="music" src="song.mp3"></audio>
 
 <script>
+function createHearts(){
+    setInterval(()=>{
+        let h = document.createElement("div");
+        h.className = "heart";
+        h.innerHTML = "💖";
+        h.style.left = Math.random()*100 + "vw";
+        h.style.animationDuration = (4 + Math.random()*3) + "s";
+        document.body.appendChild(h);
+
+        setTimeout(()=> h.remove(), 6000);
+    },400);
+}
+createHearts();
+
 function openGift(){
     document.getElementById("lid").style.transform="rotate(-25deg)";
 
@@ -266,6 +346,16 @@ function openGift(){
 function showNote(){
     mainScreen.style.display="none";
     noteScreen.style.display="flex";
+}
+
+function backToMain(){
+    noteScreen.style.display="none";
+    mainScreen.style.display="flex";
+}
+
+function backToGift(){
+    mainScreen.style.display="none";
+    giftScreen.style.display="flex";
 }
 
 /* AUTO SLIDER */
